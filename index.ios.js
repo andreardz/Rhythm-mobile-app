@@ -16,8 +16,8 @@ export default class Rhythm extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
+        <Text style={styles.Rhythm}>
+          RHYTHM
         </Text>
         <Text style={styles.instructions}>
           To get started, edit index.ios.js
@@ -34,12 +34,15 @@ export default class Rhythm extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    //justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#9B51E0',
   },
-  welcome: {
-    fontSize: 20,
+  Rhythm: {
+    color: '#FFFFFF',
+    fontFamily: 'Blanch',
+    fontSize: 123,
+    top: 169,
     textAlign: 'center',
     margin: 10,
   },
