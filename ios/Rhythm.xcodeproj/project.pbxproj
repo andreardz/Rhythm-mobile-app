@@ -50,6 +50,7 @@
 		4C6F66731DF1439A00A79337 /* SanFranciscoText-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F665E1DF1439A00A79337 /* SanFranciscoText-Semibold.otf */; };
 		4C6F66741DF1439A00A79337 /* SanFranciscoText-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4C6F665F1DF1439A00A79337 /* SanFranciscoText-SemiboldItalic.otf */; };
 		4C6F66771DF15B6400A79337 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6F66761DF15B6400A79337 /* libRCTAnimation.a */; };
+		4C6F66871DF1CF5300A79337 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C6F66861DF1CF2700A79337 /* libRCTCamera.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -180,6 +181,13 @@
 			remoteGlobalIDString = 2D2A28201D9B03D100D4039D;
 			remoteInfo = "RCTAnimation-tvOS";
 		};
+		4C6F66851DF1CF2700A79337 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4C6F66811DF1CF2700A79337 /* RCTCamera.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
+			remoteInfo = RCTCamera;
+		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -245,6 +253,7 @@
 		4C6F665F1DF1439A00A79337 /* SanFranciscoText-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "SanFranciscoText-SemiboldItalic.otf"; path = "../fonts/SanFranciscoText-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		4C6F66761DF15B6400A79337 /* libRCTAnimation.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libRCTAnimation.a; path = "../../../../Library/Developer/Xcode/DerivedData/RCTAnimation-envseomebqcgcvbbiafbrcpgnfbw/Build/Products/Debug-iphonesimulator/libRCTAnimation.a"; sourceTree = "<group>"; };
 		4C6F66781DF15BFC00A79337 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		4C6F66811DF1CF2700A79337 /* RCTCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RCTCamera.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -262,6 +271,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C6F66871DF1CF5300A79337 /* libRCTCamera.a in Frameworks */,
 				4C6F66771DF15B6400A79337 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -396,6 +406,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4C6F66821DF1CF2700A79337 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4C6F66861DF1CF2700A79337 /* libRCTCamera.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -408,6 +426,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				4C6F66811DF1CF2700A79337 /* RCTCamera.xcodeproj */,
 				4C6F66781DF15BFC00A79337 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -531,7 +550,11 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = FA8P8Y3VN8;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = FA8P8Y3VN8;
 					};
 				};
 			};
@@ -554,6 +577,10 @@
 				{
 					ProductGroup = 4C6F66791DF15BFC00A79337 /* Products */;
 					ProjectRef = 4C6F66781DF15BFC00A79337 /* RCTAnimation.xcodeproj */;
+				},
+				{
+					ProductGroup = 4C6F66821DF1CF2700A79337 /* Products */;
+					ProjectRef = 4C6F66811DF1CF2700A79337 /* RCTCamera.xcodeproj */;
 				},
 				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
@@ -720,6 +747,13 @@
 			remoteRef = 4C6F667F1DF15BFC00A79337 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		4C6F66861DF1CF2700A79337 /* libRCTCamera.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCamera.a;
+			remoteRef = 4C6F66851DF1CF2700A79337 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -844,6 +878,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = FA8P8Y3VN8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -862,6 +897,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = FA8P8Y3VN8;
 				INFOPLIST_FILE = RhythmTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -877,6 +913,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = FA8P8Y3VN8;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -900,6 +937,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = FA8P8Y3VN8;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,

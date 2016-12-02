@@ -14,6 +14,7 @@ import {
   TextInput,
 } from 'react-native';
 
+var CameraPage = require('./CameraPage');
 
 const styles = StyleSheet.create({
   container: {
@@ -186,6 +187,12 @@ class SignUpDetails extends Component {
         this.setState({tryAgain: true});
         return;
       }
+
+      this.props.navigator.push({
+          title: 'Camera',
+          component: CameraPage,
+          tintColor: '#9B51E0',
+      });
     }
 
 	render() {

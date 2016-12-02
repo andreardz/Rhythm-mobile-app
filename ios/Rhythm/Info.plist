@@ -33,8 +33,14 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSMicrophoneUsageDescription</key>
+	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSCameraUsageDescription</key>
+	<string>Record short performances using your camera.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Save performance videos and upload from camera roll.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>BLANCH_CAPS_INLINE.otf</string>
