@@ -12,123 +12,77 @@ import {
   Alert,
   Button,
   TextInput,
+  ScrollView,
+  Keyboard,
 } from 'react-native';
 
-var CameraPage = require('./CameraPage');
+var UploadPage = require('./Upload');
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#9B51E0',
   },
   Rhythm: {
-    color: '#9B51E0',
+    color: '#FFFFFF',
     fontFamily: 'Blanch',
     fontSize: 123,
     top: 50,
     textAlign: 'center',
     margin: 10,
   },
-  firstNameInput: {
+  TextInputBox: {
     alignSelf: 'center',
     height: 35,
     width: 280,
     fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#9B51E0',
     borderRadius: 5,
-    color: '#000000',
-    top: 80,
-    fontFamily: 'SanFranciscoText-Semibold',
-  },
-  lastNameInput: {
-    alignSelf: 'center',
-    height: 35,
-    width: 280,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#9B51E0',
-    borderRadius: 5,
-    color: '#000000',
-    top: 100,
-    fontFamily: 'SanFranciscoText-Semibold',
-  },
-  userNameInput: {
-    alignSelf: 'center',
-    height: 35,
-    width: 280,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#9B51E0',
-    borderRadius: 5,
-    color: '#000000',
-    top: 120,
-    fontFamily: 'SanFranciscoText-Semibold',
-  },
-
-  PasswordInput: {
-    alignSelf: 'center',
-    height: 35,
-    width: 280,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#9B51E0',
-    borderRadius: 5,
-    color: '#000000',
-    top: 140,
-    fontFamily: 'SanFranciscoText-Semibold',
-  },
-
-  confirmPasswordInput: {
-    alignSelf: 'center',
-    height: 35,
-    width: 280,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#9B51E0',
-    borderRadius: 5,
-    color: '#000000',
-    top: 160,
-    fontFamily: 'SanFranciscoText-Semibold',
+    padding: 10,
+    fontFamily: 'SanFranciscoText-Regular',
+    backgroundColor: '#a563e3',
+    marginBottom: 20,
+    color: "#FFFFFF",
   },
 
   SignUpBox: {
-    justifyContent: 'center',
     alignSelf: 'center',
     height: 35,
     width: 280,
     borderRadius: 5,
-    top: 180,
-    borderWidth: 1,
-    backgroundColor: '#9B51E0',
-  },
+    height: 35,
+    width: 280,
+    borderRadius: 5,
+    backgroundColor: '#FFFFFF',
+    marginBottom: 20,
+    justifyContent: 'center',  },
 
   SignUpBoxGrayed: {
-    justifyContent: 'center',
     alignSelf: 'center',
     height: 35,
     width: 280,
     borderRadius: 5,
-    top: 180,
-    borderWidth: 1,
-    backgroundColor: '#9B51E0',
+    height: 35,
+    width: 280,
+    borderRadius: 5,
+    backgroundColor: '#FFFFFF',
+    marginBottom: 20,
+    justifyContent: 'center',
     opacity: 0.5,
   },
 
   SignUpText: {
-    color: '#FFFFFF',
+    color: '#9B51E0',
     textAlign: 'center',
     fontSize: 16,
     fontFamily: 'SanFranciscoText-Semibold',
   },
 
   tryAgainText: {
-    color: '#9B51E0',
+    color: '#FFFFFF',
     fontFamily: 'SanFranciscoText-Regular',
     fontSize: 14,
-    top: 60,
-    textAlign: 'center',
+    marginBottom: 10,
   }
 
 });
@@ -181,7 +135,7 @@ class SignUpDetails extends Component {
     }
 
     _handlePress() {
-      if (this.state.ready === false) return;
+      // if (this.state.ready === false) return;
 
       if (this.state.password != this.state.confirmPassword) {
         this.setState({tryAgain: true});
@@ -189,9 +143,10 @@ class SignUpDetails extends Component {
       }
 
       this.props.navigator.push({
-          title: 'Camera',
-          component: CameraPage,
+          title: 'Upload a Video',
+          component: UploadPage,
           tintColor: '#9B51E0',
+          navigationBarHidden: false,
       });
     }
 
@@ -203,41 +158,72 @@ class SignUpDetails extends Component {
 	            RHYTHM
 	          </Text>
 
+            <ScrollView>
             <Text style={this.state.tryAgain? styles.tryAgainText: {height: 0}}>
-              Passwords do not match. Pleast try again.
+              Passwords do not match. Please try again.
               </Text>
 
             <TextInput
-              style={styles.firstNameInput}
+              style={styles.TextInputBox}
               onChange={this.onFirstNameChanged.bind(this)}
-              placeholder='First Name'/>
+              placeholder='First Name'
+              autoCapitalize='words'
+              autoCorrect={false}
+              onSubmitEditing={(event) => { 
+                this.refs.LastNameInput.focus(); 
+              }}
+              placeholderTextColor='#DFBCFF'/>
 
             <TextInput
-              style={styles.lastNameInput}
+              style={styles.TextInputBox}
+              ref='LastNameInput'
               onChange={this.onLastNameChanged.bind(this)}
-              placeholder='Last Name'/>
+              placeholder='Last Name'
+              autoCapitalize='words'
+              autoCorrect={false}
+              onSubmitEditing={(event) => { 
+                this.refs.UsernameInput.focus(); 
+              }}
+              placeholderTextColor='#DFBCFF'/>
 
             <TextInput
-              style={styles.userNameInput}
+              style={styles.TextInputBox}
+              ref='UsernameInput'
+              autoCorrect={false}
               onChange={this.onUserNameChanged.bind(this)}
-              placeholder='Username'/>
+              placeholder='Username'
+              autoCapitalize='none'
+              onSubmitEditing={(event) => { 
+                this.refs.PasswordInput.focus(); 
+              }}
+              placeholderTextColor='#DFBCFF'/>
 
               <TextInput
-              style={styles.PasswordInput}
+              style={styles.TextInputBox}
+              ref='PasswordInput'
               onChange={this.onPasswordChanged.bind(this)}
+              onSubmitEditing={(event) => { 
+                this.refs.ConfirmPasswordInput.focus(); 
+              }}
               secureTextEntry={true}
-              placeholder='Password'/>
+              placeholder='Password'
+              placeholderTextColor='#DFBCFF'/>
 
               <TextInput
-              style={styles.confirmPasswordInput}
+              style={styles.TextInputBox}
+              ref='ConfirmPasswordInput'
               onChange={this.onConfirmPasswordChanged.bind(this)}
               secureTextEntry={true}
-              placeholder='Confirm Password'/>
+              placeholder='Confirm Password'
+              onSubmitEditing={Keyboard.dismiss}
+              placeholderTextColor='#DFBCFF'/>
 
               <TouchableHighlight onPress={this._handlePress.bind(this)}
               style={this.state.ready ? styles.SignUpBox : styles.SignUpBoxGrayed}>
                 <Text style={styles.SignUpText}> Sign Up </Text>
               </TouchableHighlight>
+
+              </ScrollView>
 
 	        </View>
 	    );
