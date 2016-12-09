@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
   signUpBox: {
     alignItems: 'center',
     justifyContent: 'center',
-    top: 205,
+    top: 175,
     height: 51,
     width: 280,
     backgroundColor: "#743BA8",
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   loginBox: {
     alignItems: 'center',
     justifyContent: 'center',
-    top: 230,
+    top: 200,
     height: 51,
     width: 280,
     backgroundColor: "#AF7EDD",
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontFamily: 'Blanch',
     fontSize: 123,
-    top: 150,
+    top: 100,
     textAlign: 'center',
     margin: 10,
   },
@@ -93,7 +93,7 @@ class LoginPage extends Component {
 	          </Text>
 
 	          <Image
-	            style={{width: 280, height: 51, top: 180, borderRadius: 10}}
+	            style={{width: 280, height: 51, top: 150, borderRadius: 10}}
 	            source={require('./img/loginwithfb.png')}/>
 
 	            <TouchableOpacity onPress={this._handlePress.bind(this)} style={styles.signUpBox}>

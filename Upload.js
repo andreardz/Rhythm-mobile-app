@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   },
   msg: {
     fontSize: 16,
-    fontFamily: 'SanFranciscoText-Semibold',
+    fontFamily: 'SanFranciscoText-Regular',
     textAlign: 'center',
     margin: 10,
     color: '#FFFFFF',
@@ -72,14 +72,6 @@ export default class UploadPage extends React.Component {
   _processVideo() {
       ImagePicker.showImagePicker(options, (response) => {
 
-        this.props.navigator.resetTo({
-            title: 'Home',
-            component: HomePage,
-            tintColor: '#5f3986',
-            titleTextColor: '#5f3986',
-            passProps: {data: this.props.data},
-          });
-
         console.log('Response = ', response);
 
         if (response.didCancel) {
@@ -91,7 +83,16 @@ export default class UploadPage extends React.Component {
         if (response.uri !== undefined) {
           console.log("uri: " + response.uri);
           const source = {uri: response.uri.replace('file://', '')};
-          console.log("selected: " + source);
+          
+          this.props.data.profileVideoURI = response.uri;
+
+          this.props.navigator.resetTo({
+            title: 'Home',
+            component: HomePage,
+            tintColor: '#5f3986',
+            titleTextColor: '#5f3986',
+            passProps: {data: this.props.data},
+          });
         }
       });
 

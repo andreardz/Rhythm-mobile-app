@@ -21,6 +21,10 @@ var videoSize = Dimensions.get('window').width; //full width
 
 var Matches = require('./Matches');
 
+var myProfile = require('./MyProfile');
+
+var FilterSettings = require('./FilterSettings');
+
 var styles = StyleSheet.create({
     mainContainer:{
         height: Dimensions.get('window').height - 130,            
@@ -130,14 +134,15 @@ class HomePage extends Component {
       super(props);
 
       this.state = {
-        videoURL: 'https://v.cdn.vine.co/r/videos_h264high/1705F5F8CB1401724561535500288_5081a8f5437.39.0.6FD8D942-1EB6-468B-A91F-CADF12CB07EA.mp4',
+        videoURL: '',
         records: [],
         count: 0,
         index: 0,
         nextPage: 1,
         aboutMe: '',
-        avatar: 'https://v.cdn.vine.co/v/avatars/B41B41E5-B242-4ED5-B2FF-6E9D790DD03B-8147-000008DB5621E9F4.jpg',
+        avatar: '',
         username: '',
+        distance: 0,
         loaded: false,
         talents: ['', 'Singer', 'Rapper', 'Drummer', 'Guitarist', 'Pianist', 'Choreographer', 'Dancer', 'DJ', 'Violnist', 'Flute', 'Saxophone', 'Trumpet', 'Clarinet', 'Viola', 'Cello', 'Bass', 'Tuba', 'Horn', 'Harmonica'],
         talentIndex: 0,
@@ -184,6 +189,10 @@ class HomePage extends Component {
           } else {
             this.setState({talentIndex: 1});
           }
+
+          var distance = Math.floor(Math.random() * (this.props.data.maxDistance - 0 + 1)) + 0;
+
+          this.setState({distance: distance});
           this.setState({loaded: true});
         })
         .done();
@@ -195,6 +204,9 @@ class HomePage extends Component {
       if (this.props.data.usersSeen.indexOf(this.state.records[this.state.index].username) > -1) {
         this.setState({index: this.state.index + 1}, function () {this.moveToNextUser(); return;});
       }
+
+      console.log("INDEX!: " + this.state.index);
+      console.log("COUNT: " + this.state.count);
 
       this.setState({loaded: false});
       var videoUrl = this.state.records[this.state.index].videoUrl;
@@ -227,6 +239,10 @@ class HomePage extends Component {
         this.setState({talentIndex: 1});
       }
 
+      var distance = Math.floor(Math.random() * (this.props.data.maxDistance - 0 + 1)) + 0;
+
+      this.setState({distance: distance});
+
       this.props.data.usersSeen.push(this.state.records[this.state.index].username);
 
       this.setState({index: this.state.index + 1});
@@ -238,9 +254,30 @@ class HomePage extends Component {
   }
 
   goToMessages() {
+    this.player.setNativeProps({muted: true});
     this.props.navigator.push({
             title: 'Matches',
             component: Matches,
+            tintColor: '#5f3986',
+            titleTextColor: '#5f3986',
+            passProps: {data: this.props.data},
+    });
+  }
+
+  goToProfile() {
+    this.props.navigator.push({
+            title: 'Your Profile',
+            component: myProfile,
+            tintColor: '#5f3986',
+            titleTextColor: '#5f3986',
+            passProps: {data: this.props.data},
+    });
+  }
+
+  goToFilterSettings() {
+    this.props.navigator.push({
+            title: 'Filter Settings',
+            component: FilterSettings,
             tintColor: '#5f3986',
             titleTextColor: '#5f3986',
             passProps: {data: this.props.data},
@@ -276,9 +313,7 @@ class HomePage extends Component {
         messages: [],
       }
 
-      this.props.data.matches.push(match);
-
-      //this.props.data.matches.sort(this.sortMatches());
+      this.props.data.matches.unshift(match);
 
       Alert.alert('New match!', 'You\'ve just been matched with @' + this.state.username + '!', 
         [
@@ -292,8 +327,13 @@ class HomePage extends Component {
   }
 
   advanceToMessages() {
-    this.moveToNextUser();
-    this.goToMessages();
+    this.props.navigator.push({
+            title: 'Matches',
+            component: Matches,
+            tintColor: '#5f3986',
+            titleTextColor: '#5f3986',
+            passProps: {data: this.props.data},
+    }, this.moveToNextUser());
   }
 
   disLikeUser() {
@@ -306,25 +346,31 @@ class HomePage extends Component {
     return true;
   }
 
+  renderIf (condition, content) {
+    if (condition) return content;
+    else return null;
+  }
+
 	render() {
 	    return (
           <View style={{flex: 1}}>
                 <ScrollView>
                     <View style={styles.card}>
-                        <Image
-                              source={{uri: this.state.avatar}} style={styles.cardButton}/>
+                        {this.renderIf(this.state.avatar !== '', <Image
+                              source={{uri: this.state.avatar}} style={styles.cardButton}/>)}
                         <Text style={styles.username}>@{this.state.username}
                         </Text>
-                        <Text style={styles.distance}>2 mi away.
+                        <Text style={styles.distance}>{this.state.distance} mi away.
                         </Text>
                     </View>
                     <View style={styles.videoContent}>
-                      <Video source={{uri: this.state.videoURL}}
+                      {this.renderIf(this.state.videoURL !== '', <Video source={{uri: this.state.videoURL}}
                         ref={(ref) => {
                           this.player = ref
-                        }}  
+                        }}
                         repeat={true}
-                        style={styles.videoContent} />
+                        muted={false}
+                        style={styles.videoContent} />)}
                     </View>
                     <View style={styles.talentContent}>
                           <Text style={styles.talentText}>{this.state.talents[this.state.talentIndex]}
@@ -356,18 +402,22 @@ class HomePage extends Component {
                           source={require('./img/home_button_white.png')} style={styles.optionButton}/>
                 </Text>
                 <Text style={styles.alignButtons}>
+                  <TouchableOpacity onPress={this.goToProfile.bind(this)} style={styles.optionButton}>
                       <Image
                           source={require('./img/profile_button_grey.png')} style={styles.optionButton}/>
+                  </TouchableOpacity>
                 </Text>
-                <TouchableOpacity onPress={this.goToMessages.bind(this)}>
                 <Text style={styles.alignButtons}>
+                  <TouchableOpacity onPress={this.goToMessages.bind(this)} style={styles.optionButton}>
                       <Image
                           source={require('./img/message_button_grey.png')} style={styles.optionButton}/>
+                  </TouchableOpacity>
                 </Text>
-                </TouchableOpacity>
                 <Text style={styles.alignButtons}>
+                  <TouchableOpacity onPress={this.goToFilterSettings.bind(this)} style={styles.optionButton}>
                       <Image
                           source={require('./img/filter_button_grey.png')} style={styles.optionButton}/>
+                  </TouchableOpacity>
                 </Text>
                 </View>
           </View>

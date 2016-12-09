@@ -14,9 +14,23 @@ import {
   TextInput,
   ScrollView,
   Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 
 var UploadPage = require('./Upload');
+
+var Platform = require('react-native').Platform;
+var ImagePicker = require('react-native-image-picker');
+
+var options = {
+  mediaType: 'photo',
+  allowsEditing: true,
+  takePhotoButtonTitle: 'Take picture',
+  title: 'Upload Profile Picture',
+  storageOptions: {
+    cameraRoll: true,
+  },
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -83,6 +97,23 @@ const styles = StyleSheet.create({
     fontFamily: 'SanFranciscoText-Regular',
     fontSize: 14,
     marginBottom: 10,
+  },
+
+  picture: {
+    alignSelf: 'center',
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    backgroundColor: '#a563e3',
+    top: -35,
+    justifyContent: 'center',
+  },
+
+  pictureText: {
+    fontSize: 16,
+    fontFamily: 'SanFranciscoText-Regular',
+    color: '#DFBCFF',
+    textAlign: 'center',
   }
 
 });
@@ -97,6 +128,7 @@ class SignUpDetails extends Component {
         confirmPassword: '',
         ready: false,
         tryAgain: false,
+        pictureUploaded: false,
       };
     }
 
@@ -131,6 +163,7 @@ class SignUpDetails extends Component {
       else if (this.state.username === '') isReady = false;
       else if (this.state.password === '') isReady = false;
       else if (this.state.confirmPassword === '') isReady = false;
+      else if (this.props.data.avatarURI === '') isReady = false;
       this.setState({ready: isReady});
     }
 
@@ -151,7 +184,33 @@ class SignUpDetails extends Component {
       });
     }
 
+  renderIf (condition, content) {
+    if (condition) return content;
+    else return null;
+  }
+
+  uploadPicture() {
+      ImagePicker.showImagePicker(options, (response) => {
+
+        console.log('Response = ', response);
+
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        }
+        else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        }
+        if (response.uri !== undefined) {
+          
+          this.props.data.avatarURI = response.uri;
+          this.setState({pictureUploaded: true});
+
+        }
+      });
+  }
+
 	render() {
+
 	    return (
 	        <View style={styles.container}>
 
@@ -160,9 +219,16 @@ class SignUpDetails extends Component {
 	          </Text>
 
             <ScrollView>
-            <Text style={this.state.tryAgain? styles.tryAgainText: {height: 0}}>
+
+            {this.renderIf(this.props.data.avatarURI === '', <TouchableOpacity onPress={this.uploadPicture.bind(this)} style={styles.picture}>
+                <Text style={styles.pictureText}> Add picture</Text>
+              </TouchableOpacity>)}
+
+            {this.renderIf(this.props.data.avatarURI !== '', <Image style={styles.picture} source = {{uri: this.props.data.avatarURI}} />)}
+
+            {this.renderIf(this.state.tryAgain, <Text style={this.state.tryAgain? styles.tryAgainText: {height: 0}}>
               Passwords do not match. Please try again.
-              </Text>
+              </Text>)}
 
             <TextInput
               style={styles.TextInputBox}
@@ -229,7 +295,7 @@ class SignUpDetails extends Component {
                 <Text style={styles.SignUpText}> Sign Up </Text>
               </TouchableHighlight>
 
-              </ScrollView>
+            </ScrollView>
 
 	        </View>
 	    );

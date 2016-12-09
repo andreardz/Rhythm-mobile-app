@@ -30,6 +30,8 @@ class Rhytm extends React.Component {
         password: '',
         profileVideoURI: '',
         avatarURI: '',
+        AboutMe: '',
+        maxDistance: 10,
         talents: [],
         matches: [],
         usersSeen: [],

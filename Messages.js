@@ -38,7 +38,6 @@ export default class Messages extends React.Component {
     this._isMounted = true;
     this.setState(() => {
       return {
-        messages: require('./data/messages.js'),
       };
     });
   }
