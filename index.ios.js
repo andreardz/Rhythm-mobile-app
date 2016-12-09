@@ -18,6 +18,25 @@ var styles = ReactNative.StyleSheet.create({
 });
 
 class Rhytm extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      data: {
+        username: '',
+        firstName: '',
+        lastName: '',
+        password: '',
+        profileVideoURI: '',
+        avatarURI: '',
+        talents: [],
+        matches: [],
+        usersSeen: [],
+      },
+    };
+  }
+  
   render() {
     return (
       <ReactNative.NavigatorIOS
@@ -26,6 +45,7 @@ class Rhytm extends React.Component {
           navigationBarHidden: true,
           title: 'Login',
           component: LoginPage,
+          passProps: {data: this.state.data},
         }}/>
     );
   }

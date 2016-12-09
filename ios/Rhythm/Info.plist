@@ -41,6 +41,8 @@
 	<string>Record short performances using your camera.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Save performance videos and upload from camera roll.</string>
+	<key>LSApplicationCategoryType</key>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>BLANCH_CAPS_INLINE.otf</string>

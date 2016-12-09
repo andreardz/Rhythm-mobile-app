@@ -94,10 +94,6 @@ class SignUpDetails extends Component {
   constructor(props) {
       super(props);
       this.state = {
-        firstName: '',
-        lastName: '',
-        username: '',
-        password: '',
         confirmPassword: '',
         ready: false,
         tryAgain: false,
@@ -105,19 +101,23 @@ class SignUpDetails extends Component {
     }
 
     onFirstNameChanged(event) {
-      this.setState({firstName: event.nativeEvent.text}, this.checkFields);
+      this.props.data.firstName = event.nativeEvent.text;
+      this.checkFields();
     }
 
     onLastNameChanged(event) {
-      this.setState({lastName: event.nativeEvent.text}, this.checkFields);
+      this.props.data.lastName = event.nativeEvent.text;
+      this.checkFields();
     }
 
     onUserNameChanged(event) {
-      this.setState({username: event.nativeEvent.text}, this.checkFields);
+      this.props.data.username = event.nativeEvent.text;
+      this.checkFields();
     }
 
     onPasswordChanged(event) {
-      this.setState({password: event.nativeEvent.text}, this.checkFields);
+      this.props.data.password = event.nativeEvent.text;
+      this.checkFields();
     }
 
     onConfirmPasswordChanged(event) {
@@ -126,7 +126,7 @@ class SignUpDetails extends Component {
 
     checkFields() {
       var isReady = true;
-      if (this.state.firstName === '') isReady = false;
+      if (this.props.data.firstName === '') isReady = false;
       else if (this.state.lastName === '') isReady = false;
       else if (this.state.username === '') isReady = false;
       else if (this.state.password === '') isReady = false;
@@ -137,7 +137,7 @@ class SignUpDetails extends Component {
     _handlePress() {
       // if (this.state.ready === false) return;
 
-      if (this.state.password != this.state.confirmPassword) {
+      if (this.props.data.password !== this.state.confirmPassword) {
         this.setState({tryAgain: true});
         return;
       }
@@ -147,6 +147,7 @@ class SignUpDetails extends Component {
           component: UploadPage,
           tintColor: '#9B51E0',
           navigationBarHidden: false,
+          passProps: {data: this.props.data},
       });
     }
 
@@ -169,6 +170,7 @@ class SignUpDetails extends Component {
               placeholder='First Name'
               autoCapitalize='words'
               autoCorrect={false}
+              returnKeyType = {"next"}
               onSubmitEditing={(event) => { 
                 this.refs.LastNameInput.focus(); 
               }}
@@ -181,6 +183,7 @@ class SignUpDetails extends Component {
               placeholder='Last Name'
               autoCapitalize='words'
               autoCorrect={false}
+              returnKeyType = {"next"}
               onSubmitEditing={(event) => { 
                 this.refs.UsernameInput.focus(); 
               }}
@@ -193,6 +196,7 @@ class SignUpDetails extends Component {
               onChange={this.onUserNameChanged.bind(this)}
               placeholder='Username'
               autoCapitalize='none'
+              returnKeyType = {"next"}
               onSubmitEditing={(event) => { 
                 this.refs.PasswordInput.focus(); 
               }}
@@ -207,6 +211,7 @@ class SignUpDetails extends Component {
               }}
               secureTextEntry={true}
               placeholder='Password'
+              returnKeyType = {"next"}
               placeholderTextColor='#DFBCFF'/>
 
               <TextInput
@@ -215,6 +220,7 @@ class SignUpDetails extends Component {
               onChange={this.onConfirmPasswordChanged.bind(this)}
               secureTextEntry={true}
               placeholder='Confirm Password'
+              returnKeyType = {"done"}
               onSubmitEditing={Keyboard.dismiss}
               placeholderTextColor='#DFBCFF'/>
 

@@ -8,17 +8,17 @@ import {
   NativeModules,
   Navigator,
   Text,
-  TouchableHighlight,
 } from 'react-native';
 
 var Platform = require('react-native').Platform;
 var ImagePicker = require('react-native-image-picker');
+var HomePage = require('./Homepage');
 
 var options = {
   mediaType: 'video',
   allowsEditing: true,
   takePhotoButtonTitle: 'Record performance',
-  title: 'Choose video to upload',
+  title: 'Select performance from camera roll or record',
   durationLimit: 16,
   storageOptions: {
     cameraRoll: true,
@@ -71,6 +71,15 @@ export default class UploadPage extends React.Component {
 
   _processVideo() {
       ImagePicker.showImagePicker(options, (response) => {
+
+        this.props.navigator.resetTo({
+            title: 'Home',
+            component: HomePage,
+            tintColor: '#5f3986',
+            titleTextColor: '#5f3986',
+            passProps: {data: this.props.data},
+          });
+
         console.log('Response = ', response);
 
         if (response.didCancel) {
@@ -100,9 +109,9 @@ export default class UploadPage extends React.Component {
           In order to use Rhythm, you must upload or record a short (16 second) performance to share with other users! 
         </Text>
 
-        <TouchableHighlight onPress={this._processVideo.bind(this)} style={styles.ContinueBox}>
+        <TouchableOpacity onPress={this._processVideo.bind(this)} style={styles.ContinueBox}>
           <Text style={styles.ButtonText}> Continue </Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
 
       </View>
       

@@ -8,7 +8,7 @@ import {
   Text,
   View,
   Image,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 
 var SignUpDetails = require('./SignUpDetails');
@@ -80,6 +80,7 @@ class LoginPage extends Component {
 	        title: 'Sign Up Details',
 	        component: SignUpDetails,
 	        tintColor: '#9B51E0',
+          passProps: {data: this.props.data},
       });
   	}
 
@@ -93,11 +94,11 @@ class LoginPage extends Component {
 
 	          <Image
 	            style={{width: 280, height: 51, top: 180, borderRadius: 10}}
-	            source={require('./img/loginwithfb2.png')}/>
+	            source={require('./img/loginwithfb.png')}/>
 
-	            <TouchableHighlight onPress={this._handlePress.bind(this)} style={styles.signUpBox}>
+	            <TouchableOpacity onPress={this._handlePress.bind(this)} style={styles.signUpBox}>
 	            	<Text style={styles.signUp}> Sign Up </Text>
-	            </TouchableHighlight>
+	            </TouchableOpacity>
 
 	          <View style={styles.loginBox}>
 	            <Text style={styles.signUp}>
