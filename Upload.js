@@ -12,7 +12,7 @@ import {
 
 var Platform = require('react-native').Platform;
 var ImagePicker = require('react-native-image-picker');
-var HomePage = require('./Homepage');
+import HomePage from './Homepage';
 
 var options = {
   mediaType: 'video',
@@ -107,7 +107,10 @@ export default class UploadPage extends React.Component {
         </Text>
 
         <Text style = {styles.msg}> 
-          In order to use Rhythm, you must upload or record a short (16 second) performance to share with other users! 
+          Welcome to Rhythm!{"\n"}{"\n"}
+          Rhythm is an app where you can share your musical talent and meet with other musicians around the world.{"\n"}{"\n"}
+          To get started, upload or record a short (16 second) performance to share with other users! {"\n"}{"\n"}
+          Then watch other videos, give a thumbs up to your favorites, and wait to see if they like your music too.{"\n"}{"\n"}
         </Text>
 
         <TouchableOpacity onPress={this._processVideo.bind(this)} style={styles.ContinueBox}>

@@ -83,7 +83,7 @@ export default class Messages extends React.Component {
       if ((messages[0].image || messages[0].location) || !this._isAlright) {
         this.setState((previousState) => {
           return {
-            typingText: 'Michael is typing'
+            typingText: 'User is typing'
           };
         });
       }

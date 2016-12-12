@@ -1,3 +1,4 @@
+
 'use strict';
 
 import React, { Component } from 'react'
@@ -21,6 +22,12 @@ var ImagePicker = require('react-native-image-picker');
 var Video = require('react-native-video').default;
 
 var videoSize = Dimensions.get('window').width; //full width
+
+import FilterSettings from './FilterSettings';
+
+import Matches from './Matches';
+
+import LoginPage from './LoginPage';
 
 var options = {
   mediaType: 'video',
@@ -50,9 +57,9 @@ var styles = StyleSheet.create({
         flexDirection:'row' 
     },
     cardButton:{
-        width: 30,
-        height: 30,
-        borderRadius: 30/2
+        width: 60,
+        height: 60,
+        borderRadius: 60/2
     },
     username:{
         fontFamily: 'SanFranciscoText-Semibold',
@@ -62,8 +69,8 @@ var styles = StyleSheet.create({
         flex:1    
     },
     videoContent:{
-        width: videoSize*.9,
-        height: videoSize*.9,
+        width: videoSize*.7,
+        height: videoSize*.7,
         alignSelf: 'center',
     },
     talentContent:{
@@ -89,7 +96,8 @@ var styles = StyleSheet.create({
         color:'#000000',
         textAlign:'left',
         fontFamily: 'SanFranciscoText-Regular',
-        flex: 1    
+        flex: 1,    
+        paddingTop: 10,
     },
     alignButtons:{
         paddingLeft: 10,
@@ -128,9 +136,32 @@ var styles = StyleSheet.create({
         height: 50,   
         color:'#fff',
     },
+    loginBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: 10,
+    left: (videoSize/2) - 140,
+    height: 51,
+    width: 280,
+    backgroundColor: "#AF7EDD",
+    borderRadius: 10,
+  },
+  signUp: {
+    color: '#FFFFFF',
+    textAlign: 'center',
+    fontSize: 20,
+    fontFamily: 'SanFranciscoText-Bold',
+  },
+  msg: {
+    textAlign: 'center',
+    fontFamily: 'SanFranciscoText-Regular',
+    color:'#ADADAD',
+    fontSize: 16,
+    paddingTop: 20,
+  }
 });
 
-class MyProfile extends Component {
+export default class MyProfile extends Component {
 
 
   onUserNameChanged(event) {
@@ -161,7 +192,6 @@ class MyProfile extends Component {
   }
 
   goToMessages() {
-    this.player.muted = true;
     this.props.navigator.push({
             title: 'Matches',
             component: Matches,
@@ -171,10 +201,25 @@ class MyProfile extends Component {
     });
   }
 
-	render() {
-	    return (
+  goHome() {
+    this.props.navigator.popToTop(0);
+  }
+
+  goToFilterSettings() {
+    this.props.navigator.push({
+            title: 'Filter Settings',
+            component: FilterSettings,
+            tintColor: '#5f3986',
+            titleTextColor: '#5f3986',
+            passProps: {data: this.props.data},
+    });
+  }
+
+  render() {
+      return (
           <View style={{flex: 1}}>
                 <ScrollView>
+                <Text style={styles.msg}> Tap the field you would like to edit </Text>
                     <View style={styles.card}>
                         <Image
                               source={{uri: this.props.data.avatarURI}} style={styles.cardButton}/>
@@ -183,8 +228,7 @@ class MyProfile extends Component {
                         autoCorrect={false}
                         onChangeText={this.onUserNameChanged.bind(this)}
                         value={this.props.data.username}
-                        autoCapitalize='none'
-                        placeholderTextColor='#DFBCFF'/>
+                        autoCapitalize='none'/>
                     </View>
                     <View style={styles.videoContent}>
                       <TouchableOpacity onPress={this._processVideo.bind(this)}>
@@ -203,18 +247,27 @@ class MyProfile extends Component {
                         autoCorrect={true}
                         onChangeText={this.onAboutMeChanged.bind(this)}
                         value={this.props.data.AboutMe === '' ? '': this.props.data.AboutMe}
-                        placeholder='About Me (100 characters)'
+                        placeholder='Enter about me text (100 characters)'
                         maxLength={100}
-                        autoCapitalize='none'
-                        placeholderTextColor='#DFBCFF'/>
+                        autoCapitalize='none'/>
                           <Text style={styles.aboutText}>{this.props.data.aboutMe}</Text>
                     </View>
                 </ScrollView>
-
+                          
+                 <View style={styles.optionBar}>
+                  <View style={styles.loginBox}>
+                      <Text style={styles.signUp}>
+                           Log Out
+                      </Text>
+                  </View>
+                </View>    
+                           
                 <View style={styles.toolbar}>
                 <Text style={styles.alignButtons}>
+                  <TouchableOpacity onPress={this.goHome.bind(this)} style={styles.optionButton}>
                       <Image
                           source={require('./img/home_button_grey.png')} style={styles.optionButton}/>
+                  </TouchableOpacity>
                 </Text>
                 <Text style={styles.alignButtons}>
                       <Image
@@ -227,13 +280,15 @@ class MyProfile extends Component {
                   </TouchableOpacity>
                 </Text>
                 <Text style={styles.alignButtons}>
+                  <TouchableOpacity onPress={this.goToFilterSettings(this)} style={styles.optionButton}>
                       <Image
                           source={require('./img/filter_button_grey.png')} style={styles.optionButton}/>
+                  </TouchableOpacity>
                 </Text>
                 </View>
           </View>
-	    );
-	}
+      );
+  }
 }
 
 module.exports = MyProfile;

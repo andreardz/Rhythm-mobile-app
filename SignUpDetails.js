@@ -17,7 +17,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-var UploadPage = require('./Upload');
+import UploadPage from './Upload';
 
 var Platform = require('react-native').Platform;
 var ImagePicker = require('react-native-image-picker');
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
 
 
 
-class SignUpDetails extends Component {
+export default class SignUpDetails extends Component {
 
   constructor(props) {
       super(props);
@@ -168,7 +168,7 @@ class SignUpDetails extends Component {
     }
 
     _handlePress() {
-      // if (this.state.ready === false) return;
+      //zif (this.state.ready === false) return;
 
       if (this.props.data.password !== this.state.confirmPassword) {
         this.setState({tryAgain: true});
@@ -188,6 +188,19 @@ class SignUpDetails extends Component {
     if (condition) return content;
     else return null;
   }
+
+  // Scroll a component into view. Just pass the component ref string.
+inputFocused (refName) {
+  console.log("REF: " + refName);
+  var scrollView = this.refs.scrollView.getScrollResponder();
+  var scrollResponder = scrollView.getScrollRef();
+
+  scrollResponder.scrollResponderScrollNativeHandleToKeyboard(
+    React.findNodeHandle(this.refs.myInput),
+    20, // adjust depending on your contentInset
+    /* preventNegativeScrollOffset */ true
+  );
+}
 
   uploadPicture() {
       ImagePicker.showImagePicker(options, (response) => {
@@ -218,7 +231,7 @@ class SignUpDetails extends Component {
 	            RHYTHM
 	          </Text>
 
-            <ScrollView>
+            <ScrollView ref="scrollView">
 
             {this.renderIf(this.props.data.avatarURI === '', <TouchableOpacity onPress={this.uploadPicture.bind(this)} style={styles.picture}>
                 <Text style={styles.pictureText}> Add picture</Text>
@@ -233,6 +246,7 @@ class SignUpDetails extends Component {
             <TextInput
               style={styles.TextInputBox}
               onChange={this.onFirstNameChanged.bind(this)}
+              ref='FirstNameInput'
               placeholder='First Name'
               autoCapitalize='words'
               autoCorrect={false}
@@ -240,6 +254,7 @@ class SignUpDetails extends Component {
               onSubmitEditing={(event) => { 
                 this.refs.LastNameInput.focus(); 
               }}
+              //onFocus={this.inputFocused.bind(this, 'FirstNameInput')}
               placeholderTextColor='#DFBCFF'/>
 
             <TextInput
@@ -253,6 +268,7 @@ class SignUpDetails extends Component {
               onSubmitEditing={(event) => { 
                 this.refs.UsernameInput.focus(); 
               }}
+              //onFocus={this.inputFocused.bind(this, 'LastNameInput')}
               placeholderTextColor='#DFBCFF'/>
 
             <TextInput
@@ -266,6 +282,7 @@ class SignUpDetails extends Component {
               onSubmitEditing={(event) => { 
                 this.refs.PasswordInput.focus(); 
               }}
+              //onFocus={this.inputFocused.bind(this, 'UsernameInput')}
               placeholderTextColor='#DFBCFF'/>
 
               <TextInput
@@ -278,6 +295,7 @@ class SignUpDetails extends Component {
               secureTextEntry={true}
               placeholder='Password'
               returnKeyType = {"next"}
+              //onFocus={this.inputFocused.bind(this, 'PasswordInput')}
               placeholderTextColor='#DFBCFF'/>
 
               <TextInput
@@ -288,6 +306,7 @@ class SignUpDetails extends Component {
               placeholder='Confirm Password'
               returnKeyType = {"done"}
               onSubmitEditing={Keyboard.dismiss}
+              //onFocus={this.inputFocused.bind(this, 'ConfirmPasswordInput')}
               placeholderTextColor='#DFBCFF'/>
 
               <TouchableHighlight onPress={this._handlePress.bind(this)}

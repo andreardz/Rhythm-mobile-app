@@ -14,11 +14,16 @@ import {
   Image,
   TouchableOpacity,
   Dimensions,
+  ScrollView,
 } from 'react-native';
 
 var talentMsg = "Filter by talent";
 
 var genreMsg = "Filter by genre";
+
+import MyProfile from './MyProfile';
+
+import Matches from './Matches';
 
 const DropDown = require('react-native-dropdown');
 const {
@@ -33,7 +38,6 @@ var videoSize = Dimensions.get('window').width; //full width
 var styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 60
   },
   showtimeContainer: {
    borderTopColor: '#ededed', 
@@ -60,6 +64,12 @@ var styles = StyleSheet.create({
     paddingTop:10, 
     paddingBottom:10
   },
+  titleText: {
+    color: '#5f3986',
+    textAlign: 'center',
+    fontSize: 20,
+    fontFamily: 'SanFranciscoText-Semibold',
+  },
   buttonText: {
    textAlign: 'center'
   },
@@ -67,12 +77,11 @@ var styles = StyleSheet.create({
    color: '#027afe'
   },
     mainContainer:{
-        paddingTop:70,
         height: Dimensions.get('window').width - 50,
         flex:1            
     },
       box: {
-      height: 200,
+      height: 220,
       width: Dimensions.get('window').width,
       borderBottomWidth: 0.3,
       flexDirection: 'row',
@@ -104,7 +113,7 @@ var styles = StyleSheet.create({
           position: 'absolute',
           left: 0,
           right: 0,
-          bottom: -63,
+          bottom: 0,
           backgroundColor:'#272727',
           flexDirection:'row',
           height:45,
@@ -115,11 +124,27 @@ var styles = StyleSheet.create({
         height: 50,   
         color:'#fff',
     },
+  loginBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    bottom: 60,
+    left: (videoSize/2) - 140,
+    height: 51,
+    width: 280,
+    backgroundColor: "#AF7EDD",
+    borderRadius: 10,
+  },
+  signUp: {
+    color: '#FFFFFF',
+    textAlign: 'center',
+    fontSize: 20,
+    fontFamily: 'SanFranciscoText-Bold',
+  },
 });
 
-class FilterSettings extends Component {
+export default class FilterSettings extends Component {
 
-    constructor(props) {
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -145,6 +170,29 @@ class FilterSettings extends Component {
     return this.refs['OPTIONLIST'];
   }
 
+  goToProfile() {
+    this.props.navigator.push({
+            title: 'Your Profile',
+            component: MyProfile,
+            tintColor: '#5f3986',
+            titleTextColor: '#5f3986',
+            passProps: {data: this.props.data},
+    });
+  }
+
+  goToMessages() {
+    this.props.navigator.push({
+            title: 'Matches',
+            component: Matches,
+            tintColor: '#5f3986',
+            titleTextColor: '#5f3986',
+            passProps: {data: this.props.data},
+    });
+  }
+
+  goHome() {
+    this.props.navigator.popToTop(0);
+  }
 
   _talent1(atalent1) {
 
@@ -206,10 +254,11 @@ class FilterSettings extends Component {
 
         return (
     <View style={styles.mainContainer}>
+    <ScrollView>
         <View style={styles.box}>
-                <Text> Talent </Text>
+                <Text style={styles.titleText}> Talent </Text>
         <View style={styles.alignSelectors}>       
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 15}}>
           <Select
             width={250}
             ref="SELECT1"
@@ -252,7 +301,7 @@ class FilterSettings extends Component {
           <OptionList ref="OPTIONLIST"/>
       </View>
 
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: -20 }}>
           <Select
             width={250}
             ref="SELECT2"
@@ -296,7 +345,7 @@ class FilterSettings extends Component {
       </View>
 
 
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: -20  }}>
           <Select
             width={250}
             ref="SELECT3"
@@ -343,9 +392,9 @@ class FilterSettings extends Component {
     </View>
 
                 <View style={styles.box}>
-                <Text> Genre </Text>
+                <Text style={styles.titleText}> Genre </Text>
                 <View style={styles.alignSelectors}>       
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop: 20  }}>
           <Select
             width={250}
             ref="SELECT4"
@@ -413,7 +462,7 @@ class FilterSettings extends Component {
       </View>
 
 
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: -25 }}>
           <Select
             width={250}
             ref="SELECT5"
@@ -480,7 +529,7 @@ class FilterSettings extends Component {
           <OptionList ref="OPTIONLIST"/>
       </View>
 
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: -20  }}>
           <Select
             width={250}
             ref="SELECT6"
@@ -550,8 +599,8 @@ class FilterSettings extends Component {
                 </View>
 
                 <View style={styles.box}>
-                <Text> Distance </Text>
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingRight: 70, paddingBottom: 110}}>
+                <Text style={styles.titleText}> Distance </Text>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingRight: 70, paddingBottom: 100}}>
           <Select
             width={250}
             ref="SELECT7"
@@ -570,21 +619,34 @@ class FilterSettings extends Component {
 
                 </View>
 
+                </ScrollView>
+
+                <View style={styles.optionBar}>
+                  <View style={styles.loginBox}>
+                      <Text style={styles.signUp}>
+                           Save Settings
+                      </Text>
+                  </View>
+                </View> 
+
                 <View style={styles.toolbar}>
                 <Text style={styles.alignButtons}>
+                  <TouchableOpacity onPress={this.goHome.bind(this)} style={styles.optionButton}>
                       <Image
-                          source={require('./img/home_button_grey.png')} style={styles.optionButton}
-                      />
+                          source={require('./img/home_button_grey.png')} style={styles.optionButton}/>
+                  </TouchableOpacity>
                 </Text>
                 <Text style={styles.alignButtons}>
+                  <TouchableOpacity onPress={this.goToProfile.bind(this)} style={styles.optionButton}>
                       <Image
-                          source={require('./img/profile_button_grey.png')} style={styles.optionButton}
-                      />
+                          source={require('./img/profile_button_grey.png')} style={styles.optionButton}/>
+                  </TouchableOpacity>
                 </Text>
                 <Text style={styles.alignButtons}>
+                  <TouchableOpacity onPress={this.goToMessages.bind(this)} style={styles.optionButton}>
                       <Image
-                          source={require('./img/message_button_grey.png')} style={styles.optionButton}
-                      />
+                          source={require('./img/message_button_grey.png')} style={styles.optionButton}/>
+                  </TouchableOpacity>
                 </Text>
                 <Text style={styles.alignButtons}>
                       <Image
@@ -596,7 +658,5 @@ class FilterSettings extends Component {
         );
     }
 }
-
-AppRegistry.registerComponent('LocationDropDown', () => LocationDropDown);
 
 module.exports = FilterSettings;

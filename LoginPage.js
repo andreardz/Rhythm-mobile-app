@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-var SignUpDetails = require('./SignUpDetails');
+import SignUpDetails from './SignUpDetails';
 
 
 const styles = StyleSheet.create({
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 
 
 
-class LoginPage extends Component {
+export default class LoginPage extends Component {
 
 	_handlePress() {
     	this.props.navigator.push({
@@ -102,7 +102,7 @@ class LoginPage extends Component {
 
 	          <View style={styles.loginBox}>
 	            <Text style={styles.signUp}>
-	              Login with E-mail
+	              Login
 	            </Text>
 	          </View>
 

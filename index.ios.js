@@ -9,7 +9,7 @@
 var React = require('react');
 var ReactNative = require('react-native');
 
-var LoginPage = require('./LoginPage');
+import LoginPage from './LoginPage';
 
 var styles = ReactNative.StyleSheet.create({
   container: {
@@ -17,7 +17,7 @@ var styles = ReactNative.StyleSheet.create({
   }
 });
 
-class Rhytm extends React.Component {
+export default class Rhythm extends React.Component {
 
   constructor(props) {
     super(props);
@@ -53,4 +53,4 @@ class Rhytm extends React.Component {
   }
 }
 
-ReactNative.AppRegistry.registerComponent('Rhythm', function() { return Rhytm });
+ReactNative.AppRegistry.registerComponent('Rhythm', function() { return Rhythm });

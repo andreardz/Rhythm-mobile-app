@@ -18,7 +18,11 @@ import {
 
 import moment from 'moment/min/moment-with-locales.min';
 
-var Messages = require('./Messages');
+import Messages from './Messages';
+
+import MyProfile from './MyProfile';
+
+import FilterSettings from './FilterSettings';
 
 var styles = StyleSheet.create({
     container: {
@@ -93,11 +97,7 @@ var styles = StyleSheet.create({
 
 
 
-class Matches extends React.Component {
-
-  goHome() {
-    console.log("Going Home...");
-  }
+export default class Matches extends React.Component {
 
   openMessage(key) {
     this.props.navigator.push({
@@ -109,19 +109,47 @@ class Matches extends React.Component {
     });
   }
 
+  goHome() {
+    this.props.navigator.popToTop(0);
+  }
+
+  goToProfile() {
+    this.props.navigator.push({
+            title: 'Your Profile',
+            component: MyProfile,
+            tintColor: '#5f3986',
+            titleTextColor: '#5f3986',
+            passProps: {data: this.props.data},
+    });
+  }
+
+  goToFilterSettings() {
+    this.props.navigator.push({
+            title: 'Filter Settings',
+            component: FilterSettings,
+            tintColor: '#5f3986',
+            titleTextColor: '#5f3986',
+            passProps: {data: this.props.data},
+    });
+  }
+
   render () {
     return (
        <View> 
       <View style={styles.toolbar}>
                 <Text style={styles.alignButtons}>
+                  <TouchableOpacity onPress={this.goHome.bind(this)} style={styles.optionButton}>
                       <Image
                           source={require('./img/home_button_grey.png')} style={styles.optionButton}
                       />
+                  </TouchableOpacity>
                 </Text>
                 <Text style={styles.alignButtons}>
+                  <TouchableOpacity onPress={this.goToProfile.bind(this)} style={styles.optionButton}>
                       <Image
                           source={require('./img/profile_button_grey.png')} style={styles.optionButton}
                       />
+                  </TouchableOpacity>
                 </Text>
                 <Text style={styles.alignButtons}>
                       <Image
@@ -129,9 +157,11 @@ class Matches extends React.Component {
                       />
                 </Text>
                 <Text style={styles.alignButtons}>
+                  <TouchableOpacity onPress={this.goToFilterSettings.bind(this)} style={styles.optionButton}>
                       <Image
                           source={require('./img/filter_button_grey.png')} style={styles.optionButton}
                       />
+                  </TouchableOpacity>
                 </Text>
       </View>
 

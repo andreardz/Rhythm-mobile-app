@@ -12,6 +12,7 @@ import {
   Alert,
   Button,
   ScrollView,
+  AlertIOS,
   Dimensions,
 } from 'react-native';
 
@@ -19,11 +20,11 @@ var Video = require('react-native-video').default;
 
 var videoSize = Dimensions.get('window').width; //full width
 
-var Matches = require('./Matches');
+import Matches from './Matches';
 
-var myProfile = require('./MyProfile');
+import MyProfile from './MyProfile';
 
-var FilterSettings = require('./FilterSettings');
+import FilterSettings from './FilterSettings';
 
 var styles = StyleSheet.create({
     mainContainer:{
@@ -128,7 +129,7 @@ var styles = StyleSheet.create({
     },
 });
 
-class HomePage extends Component {
+export default class HomePage extends Component {
 
   constructor(props) {
       super(props);
@@ -193,6 +194,7 @@ class HomePage extends Component {
           var distance = Math.floor(Math.random() * (this.props.data.maxDistance - 0 + 1)) + 0;
 
           this.setState({distance: distance});
+          AlertIOS.alert('Welcome to Rhythm!', 'Browse through profiles and like the ones that grab your attention. If the other user likes your video, you\'ll get matched!');
           this.setState({loaded: true});
         })
         .done();
@@ -254,6 +256,7 @@ class HomePage extends Component {
   }
 
   goToMessages() {
+    if (!this.state.loaded) return;
     this.player.setNativeProps({muted: true});
     this.props.navigator.push({
             title: 'Matches',
@@ -265,9 +268,11 @@ class HomePage extends Component {
   }
 
   goToProfile() {
+    if (!this.state.loaded) return;
+    this.player.setNativeProps({muted: true});
     this.props.navigator.push({
             title: 'Your Profile',
-            component: myProfile,
+            component: MyProfile,
             tintColor: '#5f3986',
             titleTextColor: '#5f3986',
             passProps: {data: this.props.data},
@@ -275,6 +280,8 @@ class HomePage extends Component {
   }
 
   goToFilterSettings() {
+    if (!this.state.loaded) return;
+    this.player.setNativeProps({muted: true});
     this.props.navigator.push({
             title: 'Filter Settings',
             component: FilterSettings,
@@ -327,6 +334,7 @@ class HomePage extends Component {
   }
 
   advanceToMessages() {
+    this.player.setNativeProps({muted: true});
     this.props.navigator.push({
             title: 'Matches',
             component: Matches,
@@ -385,7 +393,7 @@ class HomePage extends Component {
                     <TouchableOpacity onPress={this.disLikeUser.bind(this)} style={{width: 65,
         height: 65}}>
                       <Image
-                          source={require('./img/dislike_button.png')} style={styles.optionButton}/>
+                          source={require('./img/dislike_button1.png')} style={styles.optionButton}/>
                     </TouchableOpacity>
                 </Text>
                 <Text style={styles.alignButtons}>
